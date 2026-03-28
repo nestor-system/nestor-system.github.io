@@ -13,10 +13,8 @@
     
         <link rel="canonical" href="https://cognition.ouc.ac.cy/nestor/" />
     
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.5.6/jsoneditor.min.css" rel="stylesheet" type="text/css">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/codemirror.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="nestor-index.css" media="screen" rel="stylesheet" type="text/css"/>
+        <link href="nestor-docs.css" media="screen" rel="stylesheet" type="text/css"/>
         <title>
             NESTOR - Natural languagE to Symbolic form TranslatOR (offline)
         </title>
@@ -47,174 +45,74 @@
           "keywords": ["Christodoulos Ioannou", "PhD Student", "Loizos Michael", "Professor", "Artificial Intelligence", "AI", "Computational Cognition Lab", "Open University of Cyprus", "knowledge representation", "argumentation", "reasoning", "AI explainability", "AI interpretability", "AI contestability", "AI compliance", "natural language understanding", "NLP"]
         
         }
-    </script>
-
-    <script>
-        const githubPagesHostnamePattern = /(^|\.)github\.io$/;
-        const redirectSuffix = window.location.search + window.location.hash;
-        if (githubPagesHostnamePattern.test(window.location.hostname)) {
-            if (window.location.pathname.endsWith('/')) {
-                window.location.replace(window.location.pathname + 'docs.html' + redirectSuffix);
-            } else if (window.location.pathname.endsWith('/index.html')) {
-                window.location.replace(window.location.pathname.replace('/index.html', '/docs.html') + redirectSuffix);
-            }
-        }
-    </script>
+    </script>   
 
 
-    <body onload="loadPage()">
+    <body>
 
-
-        <div id="nestorOverlay">
-            <div id="loader"></div>
-            <div id="textOverlay">Establishing connection to NESTOR Web Service...</div>
+        <div class="header">
+            <div id="headerTextNESTOR" class="headerText">NESTOR - Natural languagE to Symbolic form TranslatOR</div>
         </div>
 
-
-        <div style="display:none;" id="nestorPageContent" class="animate-bottom">
-
-            <div class="header">
-                <div id="headerTextNESTOR" class="headerText">NESTOR - Natural languagE to Symbolic form TranslatOR (offline)</div>
-            </div>
-
-            <div class="topnav">
-                <a class="active" href="index.html">Home</a>
-                <a href="docs.html">About</a>
-            </div>
-
-            <div class="row">
-                <div class="column left">
-                    <div class="onTopHorizontalContainer">
-                        <div  id="nlAdviceLabel" for="nlAdvice" class="textarea-label">
-                            Natural Language Advice
-                        </div>
-                        <div class="actionButtonsHorizontallyEnd">
-                            <i class="actionCommandIcon fa fa-solid fa-close transparent"></i>
-                        </div>
-                    </div>
-                    <textarea id="nlAdvice" class="textarea" placeholder="Give an advice in natural language..."></textarea>
-                </div>
-            
-                <div class="column middle">
-                    <div class="flexCenteredContainer">
-                        <div class="actionButtonsHorizontallyCenter">
-                            <i class="actionCommandIcon fa fa-solid fa-gear tooltip" onclick="openPopup('translationSettingsPopup', editTranslationSettings)">
-                                <span class="tooltiptext">Translation Settings</span>
-                            </i>
-                            <i class="actionCommandIcon fa fa-solid fa-pencil tooltip" onclick="openPopup('editTranslationPolicyPopup', editTranslationPolicy)">
-                                <span class="tooltiptext">Edit Translation Policy</span>
-                            </i>
-                            <i class="actionCommandIcon fa fa-brands fa-github tooltip" onclick="window.open('https://github.com/orgs/nestor-system/repositories')">
-                                <span class="tooltiptext">NESTOR GitHub Repositories</span>
-                            </i>
-                        </div>
-                    </div>
-                    <div class="flexCenteredContainer">
-                        <div class="actionButtonsVertically">
-                            <i id="animGenerate" class="actionCommandIcon fa fa-circle-o-notch fa-spin transparent" style="color: #1f74ad"></i>
-                            <i class="actionCommandIcon fa fa-solid fa-arrow-right tooltip" onclick="generateLogic(nestor_generateLogicExpressions)" style="font-size: 20px">
-                                <span class="tooltiptext">Generate Logic Expressions</span>
-                                </i>
-                            <i class="actionCommandIcon fa fa-solid fa-bolt tooltip" onclick="generateLogic(nestor_generateLogicPredicates)" style="font-size: 20px">
-                                <span class="tooltiptext">Generate Logic Predicates</span>
-                            </i>
-                            <i class="actionCommandIcon fa fa-circle-o-notch fa-spin transparent" style="color: #1f74ad"></i>
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="column right">
-                    <div class="onTopHorizontalContainer">
-                        <div  id="generatedLogicLabel" for="generatedLogic" class="textarea-label">
-                            Generated Logic
-                        </div>
-                        <div class="actionButtonsHorizontallyEnd">
-                            <i id="btnViewSystemOutput" class="actionCommandIcon fa fa-solid fa-eye tooltip transparent" onclick="openPopup('systemOutputPopup', viewSystemOutput)">
-                                <span class="tooltiptext">View System Output</span>
-                            </i>
-                            <i class="actionCommandIcon fa fa-circle-o-notch fa-spin transparent" style="color: #1f74ad"></i>
-                        </div>
-                    </div>
-                    <textarea id="generatedLogic" class="textarea"></textarea>
-                </div>
-            </div>
-        
-            <div class="footer">
-                <div id="consoleNESTOR" class="footerText"></div>
-            </div>
-
-            <div class="nestorPopup" id="editTranslationPolicyPopup">
-                <div class="popupContainer">
-                    <div class="onTopHorizontalContainer">
-                        <div id="translationPolicyLabel" for="translationPolicy" class="textarea-label">
-                            Translation Policy
-                        </div>
-                        <div class="actionButtonsHorizontallyEnd">
-                            <i class="actionIcon fa fa-solid fa-eraser tooltip" onclick="clearTranslationPolicy()">
-                                <span class="tooltiptext">Clear</span>
-                            </i>
-                            <i class="actionIcon fa fa-solid fa-rotate-right tooltip" onclick="loadTranslationPolicy()">
-                                <span class="tooltiptext">Load Default</span>
-                            </i>
-                            <i class="actionIcon fa fa-solid fa-download tooltip" onclick="downloadTranslationPolicy('editTranslationPolicyPopup')">
-                                <span class="tooltiptext">Download</span>
-                            </i>
-                            <i class="checkmark fa fa-solid fa-check tooltip" onclick="useTranslationPolicy('editTranslationPolicyPopup')">
-                                <span class="tooltiptext">Use</span>
-                            </i>
-                            <i class="close fa fa-solid fa-close" onclick="closePopup('editTranslationPolicyPopup')"></i>
-                        </div>
-                    </div>
-                    <div class="popupCentralContainer">
-                        <textarea id="translationPolicy" class="textarea"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nestorPopup" id="translationSettingsPopup">
-                <div class="popupContainer">
-                    <div class="onTopHorizontalContainer">
-                        <div id="translationSettingsLabel" for="translationSettings" class="textarea-label">
-                            Translation Settings
-                        </div>
-                        <div class="actionButtonsHorizontallyEnd">
-                            <i class="checkmark fa fa-solid fa-check tooltip" onclick="useTranslationSettings('translationSettingsPopup')">
-                                <span class="tooltiptext">Use</span>
-                            </i>
-                            <i class="close fa fa-solid fa-close" onclick="closePopup('translationSettingsPopup')"></i>
-                        </div>
-                    </div>
-                    <div class="popupCentralContainer">
-                        <div id="translationSettings" class="textarea"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nestorPopup" id="systemOutputPopup">
-                <div class="popupContainer">
-                    <div class="onTopHorizontalContainer">
-                        <div id="systemOutputLabel" for="systemOutput" class="textarea-label">
-                            System Output
-                        </div>
-                        <div class="actionButtonsHorizontallyEnd">
-                            <i class="close fa fa-solid fa-close" onclick="closePopup('systemOutputPopup')"></i>
-                        </div>
-                    </div>
-                    <div class="popupCentralContainer">
-                        <div id="systemOutput" class="textarea"></div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="topnav">
+            <a href="app.html">Home</a>
+            <a class="active" href="index.html">About</a>
         </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.5.6/jsoneditor.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/codemirror.min.js"></script>
-        <script type="text/javascript" src="nestor-codemirror.js"></script>
-        <script type="text/javascript" src="nestor-jsoneditor.js"></script>
+        <div class="body-container docs">
+
+            <div class="docs-body">
+
+                <div id="main-body" class="body-layout">
+
+                    <h3 id="Description">Description</h3>
+                    <p>
+                        NESTOR is a white-box <b>N</b>atural languag<b>E</b> to <b>S</b>mbolic form <b>T</b>ranslat<b>OR</b>
+                    </p>
+                    <p>
+                        The implementation of the translation pipeline is provided by NESTOR Web Service. You can view Web Service specification <a href="#" id="server-link" target="_blank" rel="noopener noreferrer" class="text-link">Server URL</a>.
+                    </p>
+                    <p>
+                        The source code of NESTOR Library, Service and Desktop can be found in the <a href="https://github.com/orgs/nestor-system/repositories" target="_blank">GitHub page</a> of the project.
+                    </p>
+
+                    <h3 id="Related-Work">Related Work</h3>
+                    <ul>
+                        <li><a href="https://www.researchgate.net/publication/334989337_Machine_Coaching" target="_blank" rel="noopener noreferrer"><span class="text-link">Machine Coaching</span></a>, <i style="font-size:11pt">Loizos Michael</i></li>
+                        <li><a href="http://cognition.ouc.ac.cy/prudens/" target="_blank" rel="noopener noreferrer"><span class="text-link">Prudens Web Page</span></a></li>
+                        <li><a href="https://doi.org/10.5220/0012454500003636" target="_blank" rel="noopener noreferrer"><span class="text-link">A Coachable Parser of Natural Language Advice</span></a> <a href="https://www.researchgate.net/publication/378610018_A_Coachable_Parser_of_Natural_Language_Advice" target="_blank" rel="noopener noreferrer"><span class="text-link">[Research Gate]</span></a>, <i style="font-size:11pt">Christodoulos Ioannou and Loizos Michael</i></li>
+                        <li><a href="https://www.researchgate.net/publication/358149219_Knowledge-Based_Translation_of_Natural_Language_into_Symbolic_Form" target="_blank" rel="noopener noreferrer"><span class="text-link">Knowledge-Based Translation of Natural Language into Symbolic Form</span></a>, <i style="font-size:11pt">Christodoulos Ioannou and Loizos Michael</i></li>
+                        <li><a href="https://www.researchgate.net/publication/363671222_Machine_Coaching_with_Proxy_Coaches" target="_blank" rel="noopener noreferrer"><span class="text-link">Machine Coaching with Proxy Coaches</span></a>, <i style="font-size:11pt">Vassilis Markos, Marios Thoma and Loizos Michael</i></li>
+                        <li><a href="https://www.researchgate.net/publication/366218197_Prudens_An_Argumentation-Based_Language_for_Cognitive_Assistants" target="_blank" rel="noopener noreferrer"><span class="text-link">An Argumentation-Based Language for Cognitive Assistants</span></a>, <i style="font-size:11pt">Vassilis Markos and Loizos Michael</i></li>
+                    </ul>
+
+                    <h3 id="Contact-Us">Contact Us</h3>
+                    <p></p>
+                    <p>
+                        <a href="mailto:Christodoulos.Ioannou@st.ouc.ac.cy"><span class="text-link">Christodoulos Ioannou</span></a>, <a href="mailto:loizos@ouc.ac.cy"><span class="text-link">Loizos Michael</span></a>
+                    </p>
+                    <p>
+                        <a href="https://ttooulis.github.io/profile/" target="_blank" rel="noopener noreferrer"><span class="text-link">Christodoulos Ioannou Profile Page</span></a>
+                    </p>
+                    <p>
+                        <a href="https://cognition.ouc.ac.cy/cclab/" target="_blank" rel="noopener noreferrer"><span class="text-link">Computational Cognition Lab</span></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <script type="text/javascript" src="nestor-webcalls.js"></script>
-        <script type="text/javascript" src="nestor-ui.js"></script>
+        <script type="text/javascript" src="nestor-docs.js"></script>
+        <script>
+            // Get service URL
+            document.addEventListener('DOMContentLoaded', function() {
+                var link = document.getElementById('server-link');
+                if (link != null) {
+                    link.href = getServerSwaggerURL();
+                    link.textContent = 'here';
+                }
+            });
+        </script>
 
     </body>
-
 </html>
