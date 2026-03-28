@@ -47,11 +47,17 @@
           "keywords": ["Christodoulos Ioannou", "PhD Student", "Loizos Michael", "Professor", "Artificial Intelligence", "AI", "Computational Cognition Lab", "Open University of Cyprus", "knowledge representation", "argumentation", "reasoning", "AI explainability", "AI interpretability", "AI contestability", "AI compliance", "natural language understanding", "NLP"]
         
         }
-    </script>   
+    </script>
 
     <script>
-        if (window.location.hostname.endsWith('github.io') && window.location.pathname.endsWith('/')) {
-            window.location.replace('docs.html');
+        const githubPagesHostnamePattern = /(^|\.)github\.io$/;
+        const redirectSuffix = window.location.search + window.location.hash;
+        if (githubPagesHostnamePattern.test(window.location.hostname)) {
+            if (window.location.pathname.endsWith('/')) {
+                window.location.replace(window.location.pathname + 'docs.html' + redirectSuffix);
+            } else if (window.location.pathname.endsWith('/index.html')) {
+                window.location.replace(window.location.pathname.replace('/index.html', '/docs.html') + redirectSuffix);
+            }
         }
     </script>
 
